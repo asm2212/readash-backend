@@ -1,24 +1,25 @@
-import express from "express"
-import cors from "cors"
-import dotenv from "dotenv"
-import http from "http"
-import { connectDB } from "./config/db";
+import cors from 'cors'
+import dotenv from 'dotenv'
+import express from 'express'
 
-dotenv.config();
-connectDB();
+import { connectDB } from './config/db.js'
+import { errorHandler } from './middlewares/errorHandler.js'
 
-const app = express();
-const server = http.createServer(app)
+dotenv.config()
+await connectDB()
 
-app.use(express.json());
-app.use(cors());
+const app = express()
+app.use(cors())
+app.use(express.json())
 
-app.get("/",(_req,res) => {
-     res.send("ReaDash API is running ✅");
+app.get('/', (_req, res) => {
+  res.status(200).json({ message: '🩺 ReaDash API is live!' })
 })
 
-const PORT = process.env.PORT || 5000;
+// Error handling middleware
+app.use(errorHandler)
 
-server.listen(PORT,() => {
-     console.log(`🚀 Server running on port ${PORT}`);
+const PORT = process.env.PORT || 5000
+app.listen(PORT, () => {
+  console.log(`🚀 Server running on port ${PORT}`)
 })
