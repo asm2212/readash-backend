@@ -14,12 +14,13 @@
     "test": "jest",
     "lint-staged": "lint-staged"
   },
-  "lint-staged": {
-    "*.{js,ts}": [
-      "eslint --fix --max-warnings=5",
-      "prettier --write"
-    ]
-  },
+ "lint-staged": {
+  "!socket-test-client/*.js": [],
+  "src/**/*.{js,ts}": [
+    "eslint --fix --max-warnings=5",
+    "prettier --write"
+  ]
+},
   "exports": {
     ".": "./src/index.ts"
   },
